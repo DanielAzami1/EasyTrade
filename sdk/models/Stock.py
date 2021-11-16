@@ -14,6 +14,7 @@ class Stock:
         self.price = price
         self.shares = shares
         self.date_purchased = date_purchased
+        self.market_value = price * shares
 
         if description:
             self.description = description
