@@ -1,6 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 
+"""
+11/16/21
+
+Class for StockScraper object, used to pull constituents list for various indexes (defined in index_url_map).
+"""
 
 class StockScraper:
     def __init__(self, index: str):
@@ -21,7 +26,7 @@ class StockScraper:
         {asset name : ticker}"""
         URL = "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies"
         page = requests.get(URL).text
-        soup = BeautifulSoup(page, features="lxml")
+        soup = BeautifulSoup(page, features='html.parser')
         stocklist = {}
         stock_table = soup.find("table", id="constituents")
         stock_table_data = stock_table.tbody.find_all("tr")
@@ -35,7 +40,7 @@ class StockScraper:
     def get_stocklist_snp600():
         URL = "https://en.wikipedia.org/wiki/List_of_S%26P_600_companies"
         page = requests.get(URL).text
-        soup = BeautifulSoup(page, "lxml")
+        soup = BeautifulSoup(page, features='html.parser')
         stocklist = {}
         stock_table = soup.find("table", {"class": "wikitable sortable"})
         stock_table_data = stock_table.find_all("tr")
@@ -51,7 +56,7 @@ class StockScraper:
     def get_stocklist_nasdaq100():
         URL = "https://en.wikipedia.org/wiki/NASDAQ-100"
         page = requests.get(URL).text
-        soup = BeautifulSoup(page, "lxml")
+        soup = BeautifulSoup(page, features='html.parser')
         stocklist = {}
         stock_table = soup.find("table", id="constituents")
         stock_table_data = stock_table.tbody.find_all("tr")
@@ -66,7 +71,7 @@ class StockScraper:
     def get_stocklist_ftse100():
         URL = "https://en.wikipedia.org/wiki/FTSE_100_Index"
         page = requests.get(URL).text
-        soup = BeautifulSoup(page, "lxml")
+        soup = BeautifulSoup(page, features='html.parser')
         stocklist = {}
         stock_table = soup.find("table", id="constituents")
         stock_table_data = stock_table.tbody.find_all("tr")
@@ -81,7 +86,7 @@ class StockScraper:
     def get_stocklist_russell():
         URL = "https://en.wikipedia.org/wiki/Russell_1000_Index"
         page = requests.get(URL).text
-        soup = BeautifulSoup(page, "lxml")
+        soup = BeautifulSoup(page, features='html.parser')
         stocklist = {}
         stock_table = soup.find("table", {"class": "wikitable sortable"})
         stock_table_data = stock_table.find_all("tr")
@@ -95,6 +100,6 @@ class StockScraper:
 
 
 if __name__ == "__main__":
-    stocklist_test = StockScraper("SNP500")
+    stocklist_test = StockScraper("NASDAQ100")
     stocklist_test = stocklist_test.constituents_list
     print(stocklist_test)
